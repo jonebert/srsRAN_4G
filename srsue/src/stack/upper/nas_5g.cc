@@ -31,9 +31,13 @@
 #include "srsran/interfaces/ue_usim_interfaces.h"
 #include "srsue/hdr/stack/upper/nas_5g_procedures.h"
 
+#include <algorithm>
 #include <fstream>
 #include <iomanip>
+#include <iterator>
+#include <random>
 #include <unistd.h>
+#include <vector>
 
 #define MAC_5G_OFFSET 2
 #define SEQ_5G_OFFSET 6
@@ -272,7 +276,16 @@ int nas_5g::send_registration_request()
   usim->get_home_mnc_bytes(suci.mnc.data(), suci.mnc.size());
 
   suci.scheme_output.resize(5);
-  usim->get_home_msin_bcd(suci.scheme_output.data(), 5);
+
+  std::random_device                 rnd_device;
+  std::mt19937                       mersenne_engine{rnd_device()};
+  std::uniform_int_distribution<int> dist{48, 57};
+
+  auto gen = [&]() { return dist(mersenne_engine); };
+
+  std::generate(suci.scheme_output.begin(), suci.scheme_output.end(), gen);
+
+  // usim->get_home_msin_bcd(suci.scheme_output.data(), 5);
   logger.info("Requesting IMSI attach (IMSI=%s)", usim->get_imsi_str().c_str());
 
   reg_req.ue_security_capability_present = true;
