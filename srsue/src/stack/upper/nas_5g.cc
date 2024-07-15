@@ -29,6 +29,7 @@
 #include "srsran/interfaces/ue_gw_interfaces.h"
 #include "srsran/interfaces/ue_rrc_interfaces.h"
 #include "srsran/interfaces/ue_usim_interfaces.h"
+#include "srsue/hdr/common.h"
 #include "srsue/hdr/stack/upper/nas_5g_procedures.h"
 
 #include <algorithm>
@@ -43,13 +44,12 @@
 #define SEQ_5G_OFFSET 6
 #define NAS_5G_BEARER 1
 
-std::atomic<bool> request_performed{false};
-
 using namespace srsran;
 using namespace srsran::nas_5g;
 
 namespace srsue {
 
+std::atomic<bool> request_performed;
 /*********************************************************************
  *   NAS 5G (NR)
  ********************************************************************/

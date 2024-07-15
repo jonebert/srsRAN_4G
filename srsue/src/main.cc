@@ -31,6 +31,7 @@
 #include "srsran/support/emergency_handlers.h"
 #include "srsran/support/signal_handler.h"
 #include "srsran/version.h"
+#include "srsue/hdr/common.h"
 #include "srsue/hdr/metrics_csv.h"
 #include "srsue/hdr/metrics_json.h"
 #include "srsue/hdr/metrics_stdout.h"
@@ -49,7 +50,6 @@
 #include <unistd.h>
 
 extern std::atomic<bool> simulate_rlf;
-extern std::atomic<bool> request_performed;
 
 using namespace std;
 using namespace srsue;
@@ -809,13 +809,13 @@ int main(int argc, char* argv[])
 
   unsigned performed_requests = 0;
   while (running) {
+    srsue::request_performed = false;
     cout << "Attaching UE..." << endl;
     ue.switch_on();
 
-    while (!request_performed) {
+    while (!srsue::request_performed) {
       std::this_thread::sleep_for(chrono::milliseconds(300));
     }
-    cout << "request was performed" << endl;
 
     ue.switch_off();
     performed_requests++;
