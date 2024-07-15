@@ -31,7 +31,7 @@
 #include "srsran/support/emergency_handlers.h"
 #include "srsran/support/signal_handler.h"
 #include "srsran/version.h"
-#include "srsue/hdr/common"
+#include "srsue/hdr/common.h"
 #include "srsue/hdr/metrics_csv.h"
 #include "srsue/hdr/metrics_json.h"
 #include "srsue/hdr/metrics_stdout.h"
