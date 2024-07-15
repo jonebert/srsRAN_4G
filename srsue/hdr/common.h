@@ -3,9 +3,9 @@
 
 #include <atomic>
 
-namespace srsue {
+namespace common {
 
 extern std::atomic<bool> request_performed;
 
-} // namespace srsue
+} // namespace common
 #endif // SRSUE_COMMON_H
