@@ -44,6 +44,8 @@
 #include <stdlib.h>
 #include <string>
 #include <sys/mman.h>
+#include <sys/types.h>
+#include <thread>
 #include <unistd.h>
 
 extern std::atomic<bool> simulate_rlf;
@@ -56,10 +58,11 @@ namespace bpo = boost::program_options;
  *  Local static variables
  ***********************************************************************/
 
-static bool              do_metrics     = false;
-static metrics_stdout*   metrics_screen = nullptr;
-static srslog::sink*     log_sink       = nullptr;
-static std::atomic<bool> running        = {true};
+static bool              do_metrics        = false;
+static metrics_stdout*   metrics_screen    = nullptr;
+static srslog::sink*     log_sink          = nullptr;
+static std::atomic<bool> running           = {true};
+static std::atomic<bool> request_performed = {false};
 
 /**********************************************************************
  *  Program arguments processing
@@ -804,18 +807,19 @@ int main(int argc, char* argv[])
   pthread_t input;
   pthread_create(&input, nullptr, &input_loop, &args);
 
-  cout << "Attaching UE..." << endl;
-  ue.switch_on();
-
-  if (args.gui.enable) {
-    ue.start_plot();
-  }
-
+  unsigned performed_requests = 0;
   while (running) {
-    sleep(1);
-  }
+    cout << "Attaching UE..." << endl;
+    ue.switch_on();
 
-  ue.switch_off();
+    while (!request_performed) {
+      std::this_thread::sleep_for(chrono::milliseconds(300));
+    }
+
+    ue.switch_off();
+    performed_requests++;
+    cout << "Performed Requests: " << performed_requests << endl;
+  }
   pthread_cancel(input);
   pthread_join(input, nullptr);
   metricshub.stop();
