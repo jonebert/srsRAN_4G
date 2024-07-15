@@ -63,7 +63,6 @@ static bool              do_metrics     = false;
 static metrics_stdout*   metrics_screen = nullptr;
 static srslog::sink*     log_sink       = nullptr;
 static std::atomic<bool> running        = {true};
-std::atomic<bool>        srsue::request_performed;
 
 /**********************************************************************
  *  Program arguments processing
@@ -809,6 +808,7 @@ int main(int argc, char* argv[])
   pthread_create(&input, nullptr, &input_loop, &args);
 
   unsigned performed_requests = 0;
+  srsue::request_performed{false};
   while (running) {
     srsue::request_performed = false;
     cout << "Attaching UE..." << endl;
