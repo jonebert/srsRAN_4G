@@ -35,6 +35,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iomanip>
+#include <iostream>
 #include <iterator>
 #include <random>
 #include <unistd.h>
@@ -335,6 +336,7 @@ int nas_5g::send_registration_request()
 
 int nas_5g::send_registration_complete()
 {
+  std::cout << "Starting to send Registration Complete" << std::endl;
   unique_byte_buffer_t pdu = srsran::make_byte_buffer();
   if (!pdu) {
     logger.error("Couldn't allocate PDU in %s().", __FUNCTION__);
@@ -453,7 +455,7 @@ int nas_5g::send_security_mode_complete(const srsran::nas_5g::security_mode_comm
 
   if (cfg.enable_slicing) {
     s_nssai_t s_nssai{};
-    modified_registration_request.requested_nssai_present      = true;
+    modified_registration_request.requested_nssai_present = true;
     set_nssai(s_nssai);
     modified_registration_request.requested_nssai.s_nssai_list = {s_nssai};
   }
