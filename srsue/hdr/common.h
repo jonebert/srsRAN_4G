@@ -5,7 +5,7 @@
 
 namespace common {
 
-std::atomic<bool> request_performed;
+extern std::atomic<bool> request_performed;
 
 } // namespace common
 #endif // SRSUE_COMMON_H
