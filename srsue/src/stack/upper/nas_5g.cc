@@ -35,7 +35,6 @@
 #include <algorithm>
 #include <fstream>
 #include <iomanip>
-#include <iostream>
 #include <iterator>
 #include <random>
 #include <unistd.h>
@@ -50,7 +49,6 @@ using namespace srsran::nas_5g;
 
 namespace srsue {
 
-std::atomic<bool> request_performed;
 /*********************************************************************
  *   NAS 5G (NR)
  ********************************************************************/
@@ -336,7 +334,6 @@ int nas_5g::send_registration_request()
 
 int nas_5g::send_registration_complete()
 {
-  std::cout << "Starting to send Registration Complete" << std::endl;
   unique_byte_buffer_t pdu = srsran::make_byte_buffer();
   if (!pdu) {
     logger.error("Couldn't allocate PDU in %s().", __FUNCTION__);
@@ -367,8 +364,6 @@ int nas_5g::send_registration_complete()
   logger.info("Sending Registration Complete");
   rrc_nr->write_sdu(std::move(pdu));
   ctxt_base.tx_count++;
-  request_performed = true;
-  srsran::console("RRC Request Performed\n");
   return SRSRAN_SUCCESS;
 }
 
@@ -878,6 +873,7 @@ int nas_5g::handle_registration_reject(registration_reject_t& registration_rejec
 int nas_5g::handle_authentication_request(authentication_request_t& authentication_request)
 {
   logger.info("Handling Authentication Request");
+  srsue::request_performed = true;
   ctxt_base.rx_count++;
   // Generate authentication response using RAND, AUTN & KSI-ASME
   plmn_id_t plmn_id;
