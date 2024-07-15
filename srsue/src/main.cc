@@ -59,10 +59,11 @@ namespace bpo = boost::program_options;
  *  Local static variables
  ***********************************************************************/
 
-static bool              do_metrics     = false;
-static metrics_stdout*   metrics_screen = nullptr;
-static srslog::sink*     log_sink       = nullptr;
-static std::atomic<bool> running        = {true};
+static bool              do_metrics                = false;
+static metrics_stdout*   metrics_screen            = nullptr;
+static srslog::sink*     log_sink                  = nullptr;
+static std::atomic<bool> running                   = {true};
+std::atomic<bool>        common::request_performed = {false};
 
 /**********************************************************************
  *  Program arguments processing
