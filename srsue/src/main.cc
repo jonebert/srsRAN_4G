@@ -31,6 +31,7 @@
 #include "srsran/support/emergency_handlers.h"
 #include "srsran/support/signal_handler.h"
 #include "srsran/version.h"
+#include "srsue/hdr/common"
 #include "srsue/hdr/metrics_csv.h"
 #include "srsue/hdr/metrics_json.h"
 #include "srsue/hdr/metrics_stdout.h"
@@ -58,11 +59,10 @@ namespace bpo = boost::program_options;
  *  Local static variables
  ***********************************************************************/
 
-static bool              do_metrics                = false;
-static metrics_stdout*   metrics_screen            = nullptr;
-static srslog::sink*     log_sink                  = nullptr;
-static std::atomic<bool> running                   = {true};
-std::atomic<bool>        common::request_performed = {false};
+static bool              do_metrics     = false;
+static metrics_stdout*   metrics_screen = nullptr;
+static srslog::sink*     log_sink       = nullptr;
+static std::atomic<bool> running        = {true};
 
 /**********************************************************************
  *  Program arguments processing
