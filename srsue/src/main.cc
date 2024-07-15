@@ -808,7 +808,7 @@ int main(int argc, char* argv[])
   pthread_create(&input, nullptr, &input_loop, &args);
 
   unsigned performed_requests = 0;
-  srsue::request_performed{false};
+  srsue::request_performed    = false;
   while (running) {
     srsue::request_performed = false;
     cout << "Attaching UE..." << endl;
