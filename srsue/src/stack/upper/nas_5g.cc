@@ -873,7 +873,7 @@ int nas_5g::handle_registration_reject(registration_reject_t& registration_rejec
 int nas_5g::handle_authentication_request(authentication_request_t& authentication_request)
 {
   logger.info("Handling Authentication Request");
-  request_performed = true;
+  common::request_performed = true;
   ctxt_base.rx_count++;
   // Generate authentication response using RAND, AUTN & KSI-ASME
   plmn_id_t plmn_id;
