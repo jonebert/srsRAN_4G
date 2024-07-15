@@ -363,6 +363,7 @@ int nas_5g::send_registration_complete()
   logger.info("Sending Registration Complete");
   rrc_nr->write_sdu(std::move(pdu));
   ctxt_base.tx_count++;
+  request_performed = true;
   return SRSRAN_SUCCESS;
 }
 
