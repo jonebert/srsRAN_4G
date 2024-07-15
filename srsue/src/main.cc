@@ -49,6 +49,7 @@
 #include <unistd.h>
 
 extern std::atomic<bool> simulate_rlf;
+extern std::atomic<bool> request_performed;
 
 using namespace std;
 using namespace srsue;
@@ -58,11 +59,10 @@ namespace bpo = boost::program_options;
  *  Local static variables
  ***********************************************************************/
 
-static bool              do_metrics        = false;
-static metrics_stdout*   metrics_screen    = nullptr;
-static srslog::sink*     log_sink          = nullptr;
-static std::atomic<bool> running           = {true};
-static std::atomic<bool> request_performed = {false};
+static bool              do_metrics     = false;
+static metrics_stdout*   metrics_screen = nullptr;
+static srslog::sink*     log_sink       = nullptr;
+static std::atomic<bool> running        = {true};
 
 /**********************************************************************
  *  Program arguments processing

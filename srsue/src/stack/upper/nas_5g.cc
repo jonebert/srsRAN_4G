@@ -43,6 +43,8 @@
 #define SEQ_5G_OFFSET 6
 #define NAS_5G_BEARER 1
 
+std::atomic<bool> request_performed{false};
+
 using namespace srsran;
 using namespace srsran::nas_5g;
 
