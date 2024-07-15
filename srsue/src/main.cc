@@ -63,6 +63,7 @@ static bool              do_metrics     = false;
 static metrics_stdout*   metrics_screen = nullptr;
 static srslog::sink*     log_sink       = nullptr;
 static std::atomic<bool> running        = {true};
+std::atomic<bool>        srsue::request_performed;
 
 /**********************************************************************
  *  Program arguments processing
