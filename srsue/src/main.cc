@@ -813,28 +813,27 @@ int main(int argc, char* argv[])
   pthread_t input;
   pthread_create(&input, nullptr, &input_loop, &args);
 
-  srsue::ue ue;
-  if (ue.init(args)) {
-    ue.stop();
-    return SRSRAN_SUCCESS;
-  }
-
   unsigned performed_requests = 0;
   signal(SIGUSR1, restart_signal_handler);
-  cout << "Attaching UE..." << endl;
-  ue.switch_on();
 
   while (running) {
     request_performed = false;
+    srsue::ue ue;
+    if (ue.init(args)) {
+      ue.stop();
+      return SRSRAN_SUCCESS;
+    }
+    cout << "Attaching UE..." << endl;
+    ue.switch_on();
 
     while (!request_performed) {
       std::this_thread::sleep_for(chrono::milliseconds(300));
     }
 
+    ue.stop();
     performed_requests++;
     cout << "Performed Requests: " << performed_requests << endl;
   }
-  ue.stop();
   pthread_cancel(input);
   pthread_join(input, nullptr);
   cout << "---  exiting  ---" << endl;
