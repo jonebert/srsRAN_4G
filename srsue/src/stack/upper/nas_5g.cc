@@ -875,61 +875,65 @@ int nas_5g::handle_registration_reject(registration_reject_t& registration_rejec
 int nas_5g::handle_authentication_request(authentication_request_t& authentication_request)
 {
   std::cout << "Blub" << std::endl;
-  logger.info("Handling Authentication Request");
-  ctxt_base.rx_count++;
-  // Generate authentication response using RAND, AUTN & KSI-ASME
-  plmn_id_t plmn_id;
-  usim->get_home_plmn_id(&plmn_id);
-
-  if (authentication_request.authentication_parameter_rand_present == false) {
-    logger.error("authentication_parameter_rand_present is not present");
-    return SRSRAN_ERROR;
-  }
-
-  if (authentication_request.authentication_parameter_autn_present == false) {
-    logger.error("authentication_parameter_autn_present is not present");
-    return SRSRAN_ERROR;
-  }
-
-  initial_sec_command = true;
-  uint8_t res_star[16];
-
-  logger.info(authentication_request.authentication_parameter_rand.rand.data(),
-              authentication_request.authentication_parameter_rand.rand.size(),
-              "Authentication request RAND");
-
-  logger.info(authentication_request.authentication_parameter_autn.autn.data(),
-              authentication_request.authentication_parameter_rand.rand.size(),
-              "Authentication request AUTN");
-
-  logger.info("Serving network name %s", plmn_id.to_serving_network_name_string().c_str());
-  auth_result_t auth_result =
-      usim->generate_authentication_response_5g(authentication_request.authentication_parameter_rand.rand.data(),
-                                                authentication_request.authentication_parameter_autn.autn.data(),
-                                                plmn_id.to_serving_network_name_string().c_str(),
-                                                authentication_request.abba.abba_contents.data(),
-                                                authentication_request.abba.abba_contents.size(),
-                                                res_star,
-                                                ctxt_5g.k_amf);
-
-  logger.info(ctxt_5g.k_amf, 32, "Generated k_amf:");
-
-  if (auth_result == AUTH_OK) {
-    logger.info("Network authentication successful");
-    send_authentication_response(res_star);
-    logger.info(res_star, 16, "Generated res_star (%d):", 16);
-
-  } else if (auth_result == AUTH_FAILED) {
-    logger.error("Network authentication failure");
-    send_authentication_failure(cause_5gmm_t::cause_5gmm_type::mac_failure, res_star);
-  } else if (auth_result == AUTH_SYNCH_FAILURE) {
-    logger.error("Network authentication synchronization failure");
-    send_authentication_failure(cause_5gmm_t::cause_5gmm_type::synch_failure, res_star);
-  } else {
-    logger.error("Unhandled authentication failure cause");
-  }
-
+  std::raise(SIGUSR1);
   return SRSRAN_SUCCESS;
+  /*
+    logger.info("Handling Authentication Request");
+    ctxt_base.rx_count++;
+    // Generate authentication response using RAND, AUTN & KSI-ASME
+    plmn_id_t plmn_id;
+    usim->get_home_plmn_id(&plmn_id);
+
+    if (authentication_request.authentication_parameter_rand_present == false) {
+      logger.error("authentication_parameter_rand_present is not present");
+      return SRSRAN_ERROR;
+    }
+
+    if (authentication_request.authentication_parameter_autn_present == false) {
+      logger.error("authentication_parameter_autn_present is not present");
+      return SRSRAN_ERROR;
+    }
+
+    initial_sec_command = true;
+    uint8_t res_star[16];
+
+    logger.info(authentication_request.authentication_parameter_rand.rand.data(),
+                authentication_request.authentication_parameter_rand.rand.size(),
+                "Authentication request RAND");
+
+    logger.info(authentication_request.authentication_parameter_autn.autn.data(),
+                authentication_request.authentication_parameter_rand.rand.size(),
+                "Authentication request AUTN");
+
+    logger.info("Serving network name %s", plmn_id.to_serving_network_name_string().c_str());
+    auth_result_t auth_result =
+        usim->generate_authentication_response_5g(authentication_request.authentication_parameter_rand.rand.data(),
+                                                  authentication_request.authentication_parameter_autn.autn.data(),
+                                                  plmn_id.to_serving_network_name_string().c_str(),
+                                                  authentication_request.abba.abba_contents.data(),
+                                                  authentication_request.abba.abba_contents.size(),
+                                                  res_star,
+                                                  ctxt_5g.k_amf);
+
+    logger.info(ctxt_5g.k_amf, 32, "Generated k_amf:");
+
+    if (auth_result == AUTH_OK) {
+      logger.info("Network authentication successful");
+      send_authentication_response(res_star);
+      logger.info(res_star, 16, "Generated res_star (%d):", 16);
+
+    } else if (auth_result == AUTH_FAILED) {
+      logger.error("Network authentication failure");
+      send_authentication_failure(cause_5gmm_t::cause_5gmm_type::mac_failure, res_star);
+    } else if (auth_result == AUTH_SYNCH_FAILURE) {
+      logger.error("Network authentication synchronization failure");
+      send_authentication_failure(cause_5gmm_t::cause_5gmm_type::synch_failure, res_star);
+    } else {
+      logger.error("Unhandled authentication failure cause");
+    }
+
+    return SRSRAN_SUCCESS;
+  */
 }
 
 int nas_5g::handle_authentication_reject(srsran::nas_5g::authentication_reject_t& authentication_reject)
