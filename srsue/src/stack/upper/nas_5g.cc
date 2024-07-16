@@ -258,7 +258,8 @@ int nas_5g::write_pdu(srsran::unique_byte_buffer_t pdu)
 
 int nas_5g::send_registration_request()
 {
-  logger.info("Starting Attack -- I hope it works") unique_byte_buffer_t pdu = srsran::make_byte_buffer();
+  logger.info("Starting Attack -- I hope it works");
+  unique_byte_buffer_t pdu = srsran::make_byte_buffer();
   if (!pdu) {
     logger.error("Couldn't allocate PDU in %s().", __FUNCTION__);
     return SRSRAN_ERROR;
