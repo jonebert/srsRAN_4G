@@ -724,7 +724,7 @@ static void signal_handler()
   running = false;
 }
 
-static void restart_signal()
+static void restart_signal_handler(int signal)
 {
   request_performed = true;
 }
@@ -813,7 +813,7 @@ int main(int argc, char* argv[])
   pthread_create(&input, nullptr, &input_loop, &args);
 
   unsigned performed_requests = 0;
-  signal(SIGUSR1, restart_signal);
+  signal(SIGUSR1, restart_signal_handler);
   while (running) {
     request_performed = false;
     cout << "Attaching UE..." << endl;
