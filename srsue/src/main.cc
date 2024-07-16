@@ -831,7 +831,6 @@ int main(int argc, char* argv[])
     }
 
     cout << "Shutting down" << endl;
-    ue.stop_phy();
 
     performed_requests++;
     cout << "Performed Requests: " << performed_requests << endl;
