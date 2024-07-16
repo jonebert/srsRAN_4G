@@ -879,7 +879,6 @@ int nas_5g::handle_authentication_request(authentication_request_t& authenticati
   std::raise(SIGUSR1);
   logger.info("Finished Attack -- and another one");
   switch_off();
-  running = false;
   return SRSRAN_SUCCESS;
   /*
     logger.info("Handling Authentication Request");
