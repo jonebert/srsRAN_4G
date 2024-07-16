@@ -32,6 +32,7 @@
 #include "srsue/hdr/stack/upper/nas_5g_procedures.h"
 
 #include <algorithm>
+#include <csignal>
 #include <fstream>
 #include <iomanip>
 #include <iterator>
