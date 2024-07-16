@@ -50,12 +50,11 @@
 #include <unistd.h>
 
 extern std::atomic<bool> simulate_rlf;
+bool                     request_performed;
 
 using namespace std;
 using namespace srsue;
 namespace bpo = boost::program_options;
-
-bool request_performed;
 
 /**********************************************************************
  *  Local static variables
