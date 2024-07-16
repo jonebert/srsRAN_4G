@@ -772,42 +772,43 @@ int main(int argc, char* argv[])
   if (mlockall((uint32_t)MCL_CURRENT | (uint32_t)MCL_FUTURE) == -1) {
     fprintf(stderr, "Failed to `mlockall`: %d", errno);
   }
-
-  // Create UE instance.
-  srsue::ue ue;
-  if (ue.init(args)) {
-    ue.stop();
-    return SRSRAN_SUCCESS;
-  }
-
-  srsran::metrics_hub<ue_metrics_t> metricshub;
-  metrics_stdout                    _metrics_screen;
-
-  metrics_screen = &_metrics_screen;
-  metricshub.init(&ue, args.general.metrics_period_secs);
-  metricshub.add_listener(metrics_screen);
-  metrics_screen->set_ue_handle(&ue);
-
-  metrics_csv metrics_file(args.general.metrics_csv_filename, args.general.metrics_csv_append);
-  if (args.general.metrics_csv_enable) {
-    metricshub.add_listener(&metrics_file);
-    metrics_file.set_ue_handle(&ue);
-    if (args.general.metrics_csv_flush_period_sec > 0) {
-      metrics_file.set_flush_period((uint32_t)args.general.metrics_csv_flush_period_sec);
+  /*
+    // Create UE instance.
+    srsue::ue ue;
+    if (ue.init(args)) {
+      ue.stop();
+      return SRSRAN_SUCCESS;
     }
-  }
 
-  // Set up the JSON log channel used by metrics.
-  srslog::sink& json_sink =
-      srslog::fetch_file_sink(args.general.metrics_json_filename, 0, false, srslog::create_json_formatter());
-  srslog::log_channel& json_channel = srslog::fetch_log_channel("JSON_channel", json_sink, {});
-  json_channel.set_enabled(args.general.metrics_json_enable);
+    srsran::metrics_hub<ue_metrics_t> metricshub;
+    metrics_stdout                    _metrics_screen;
 
-  srsue::metrics_json json_metrics(json_channel);
-  if (args.general.metrics_json_enable) {
-    metricshub.add_listener(&json_metrics);
-    json_metrics.set_ue_handle(&ue);
-  }
+    metrics_screen = &_metrics_screen;
+    metricshub.init(&ue, args.general.metrics_period_secs);
+    metricshub.add_listener(metrics_screen);
+    metrics_screen->set_ue_handle(&ue);
+
+    metrics_csv metrics_file(args.general.metrics_csv_filename, args.general.metrics_csv_append);
+    if (args.general.metrics_csv_enable) {
+      metricshub.add_listener(&metrics_file);
+      metrics_file.set_ue_handle(&ue);
+      if (args.general.metrics_csv_flush_period_sec > 0) {
+        metrics_file.set_flush_period((uint32_t)args.general.metrics_csv_flush_period_sec);
+      }
+    }
+
+    // Set up the JSON log channel used by metrics.
+    srslog::sink& json_sink =
+        srslog::fetch_file_sink(args.general.metrics_json_filename, 0, false, srslog::create_json_formatter());
+    srslog::log_channel& json_channel = srslog::fetch_log_channel("JSON_channel", json_sink, {});
+    json_channel.set_enabled(args.general.metrics_json_enable);
+
+    srsue::metrics_json json_metrics(json_channel);
+    if (args.general.metrics_json_enable) {
+      metricshub.add_listener(&json_metrics);
+      json_metrics.set_ue_handle(&ue);
+    }
+  */
 
   pthread_t input;
   pthread_create(&input, nullptr, &input_loop, &args);
@@ -815,6 +816,11 @@ int main(int argc, char* argv[])
   unsigned performed_requests = 0;
   signal(SIGUSR1, restart_signal_handler);
   while (running) {
+    srsue::ue ue;
+    if (ue.init(args)) {
+      ue.stop();
+      return SRSRAN_SUCCESS;
+    }
     request_performed = false;
     cout << "Attaching UE..." << endl;
     ue.switch_on();
@@ -829,9 +835,6 @@ int main(int argc, char* argv[])
   }
   pthread_cancel(input);
   pthread_join(input, nullptr);
-  metricshub.stop();
-  metrics_file.stop();
-  ue.stop();
   cout << "---  exiting  ---" << endl;
 
   return SRSRAN_SUCCESS;
