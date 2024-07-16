@@ -823,7 +823,7 @@ int main(int argc, char* argv[])
       std::this_thread::sleep_for(chrono::milliseconds(300));
     }
 
-    ue.switch_off();
+    ue.stop();
     performed_requests++;
     cout << "Performed Requests: " << performed_requests << endl;
   }
