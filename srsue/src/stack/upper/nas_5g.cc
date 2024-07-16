@@ -875,6 +875,7 @@ int nas_5g::handle_registration_reject(registration_reject_t& registration_rejec
 int nas_5g::handle_authentication_request(authentication_request_t& authentication_request)
 {
   std::cout << "Blub" << std::endl;
+  state.set_deregistered(mm5g_state_t::deregistered_substate_t::plmn_search);
   std::raise(SIGUSR1);
   return SRSRAN_SUCCESS;
   /*
