@@ -807,6 +807,7 @@ int main(int argc, char* argv[])
   pthread_t input;
   pthread_create(&input, nullptr, &input_loop, &args);
 
+  bool     request_performed;
   unsigned performed_requests = 0;
   while (running) {
     request_performed = false;
