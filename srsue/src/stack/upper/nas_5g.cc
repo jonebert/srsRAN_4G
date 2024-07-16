@@ -29,6 +29,7 @@
 #include "srsran/interfaces/ue_gw_interfaces.h"
 #include "srsran/interfaces/ue_rrc_interfaces.h"
 #include "srsran/interfaces/ue_usim_interfaces.h"
+#include "srsue/hdr/common.h"
 #include "srsue/hdr/stack/upper/nas_5g_procedures.h"
 
 #include <algorithm>
