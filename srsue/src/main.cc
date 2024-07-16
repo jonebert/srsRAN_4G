@@ -31,7 +31,6 @@
 #include "srsran/support/emergency_handlers.h"
 #include "srsran/support/signal_handler.h"
 #include "srsran/version.h"
-#include "srsue/hdr/common.h"
 #include "srsue/hdr/metrics_csv.h"
 #include "srsue/hdr/metrics_json.h"
 #include "srsue/hdr/metrics_stdout.h"
@@ -59,10 +58,11 @@ namespace bpo = boost::program_options;
  *  Local static variables
  ***********************************************************************/
 
-static bool              do_metrics     = false;
-static metrics_stdout*   metrics_screen = nullptr;
-static srslog::sink*     log_sink       = nullptr;
-static std::atomic<bool> running        = {true};
+static bool              do_metrics        = false;
+static metrics_stdout*   metrics_screen    = nullptr;
+static srslog::sink*     log_sink          = nullptr;
+static std::atomic<bool> running           = {true};
+static bool              request_performed = false;
 
 /**********************************************************************
  *  Program arguments processing
@@ -808,6 +808,7 @@ int main(int argc, char* argv[])
   pthread_create(&input, nullptr, &input_loop, &args);
 
   unsigned performed_requests = 0;
+  signal(SIGUSR1, restart_signal);
   while (running) {
     request_performed = false;
     cout << "Attaching UE..." << endl;
@@ -829,4 +830,9 @@ int main(int argc, char* argv[])
   cout << "---  exiting  ---" << endl;
 
   return SRSRAN_SUCCESS;
+}
+
+static void restart_signal()
+{
+  request_performed = true;
 }
