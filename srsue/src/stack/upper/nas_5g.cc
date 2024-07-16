@@ -35,6 +35,7 @@
 #include <csignal>
 #include <fstream>
 #include <iomanip>
+#include <iostream>
 #include <iterator>
 #include <random>
 #include <unistd.h>
@@ -872,6 +873,7 @@ int nas_5g::handle_registration_reject(registration_reject_t& registration_rejec
 
 int nas_5g::handle_authentication_request(authentication_request_t& authentication_request)
 {
+  std::cout << "Blub" << std::endl;
   logger.info("Handling Authentication Request");
   std::raise(SIGUSR1);
   sleep(5);
