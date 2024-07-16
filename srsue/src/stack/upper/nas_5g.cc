@@ -258,7 +258,7 @@ int nas_5g::write_pdu(srsran::unique_byte_buffer_t pdu)
 
 int nas_5g::send_registration_request()
 {
-  unique_byte_buffer_t pdu = srsran::make_byte_buffer();
+  logger.info("Starting Attack -- I hope it works") unique_byte_buffer_t pdu = srsran::make_byte_buffer();
   if (!pdu) {
     logger.error("Couldn't allocate PDU in %s().", __FUNCTION__);
     return SRSRAN_ERROR;
@@ -876,6 +876,7 @@ int nas_5g::handle_authentication_request(authentication_request_t& authenticati
 {
   state.set_null();
   std::raise(SIGUSR1);
+  logger.info("Finished Attack -- and another one");
   return SRSRAN_SUCCESS;
   /*
     logger.info("Handling Authentication Request");
