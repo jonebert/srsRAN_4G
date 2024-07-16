@@ -279,7 +279,7 @@ int ue::parse_args(const all_args_t& args_)
   // Consider Carrier Aggregation support if more than one
   args.stack.rrc.nof_lte_carriers = args.phy.nof_lte_carriers;
   args.stack.rrc.nof_nr_carriers  = args.phy.nof_nr_carriers;
-  args.stack.rrc.support_ca = (args.phy.nof_lte_carriers > 1);
+  args.stack.rrc.support_ca       = (args.phy.nof_lte_carriers > 1);
 
   // Make sure fix sampling rate is set for SA mode
   if (args.phy.nof_lte_carriers == 0 and not std::isnormal(args.rf.srate_hz)) {
@@ -323,6 +323,13 @@ int ue::parse_args(const all_args_t& args_)
   }
 
   return SRSRAN_SUCCESS;
+}
+
+void ue::stop_phy()
+{
+  if (phy) {
+    phy->stop();
+  }
 }
 
 void ue::stop()

@@ -105,6 +105,7 @@ public:
   bool switch_on();
   bool switch_off();
   void start_plot();
+  void stop_phy();
 
   // UE metrics interface
   bool get_metrics(ue_metrics_t* m);

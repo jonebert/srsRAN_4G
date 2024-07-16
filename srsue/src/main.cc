@@ -830,6 +830,8 @@ int main(int argc, char* argv[])
       std::this_thread::sleep_for(chrono::milliseconds(300));
     }
 
+    ue.stop_phy();
+
     performed_requests++;
     cout << "Performed Requests: " << performed_requests << endl;
   }
