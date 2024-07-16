@@ -331,6 +331,7 @@ int nas_5g::send_registration_request()
   state.set_registered_initiated();
 
   std::raise(SIGUSR1);
+  logger.info("Raised Signal");
   return SRSRAN_SUCCESS;
 }
 
