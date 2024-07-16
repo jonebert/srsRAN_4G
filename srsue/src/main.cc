@@ -62,7 +62,7 @@ static bool              do_metrics        = false;
 static metrics_stdout*   metrics_screen    = nullptr;
 static srslog::sink*     log_sink          = nullptr;
 static std::atomic<bool> running           = {true};
-static bool              request_performed = false;
+static std::atomic<bool> request_performed = {false};
 
 /**********************************************************************
  *  Program arguments processing
@@ -724,6 +724,11 @@ static void signal_handler()
   running = false;
 }
 
+static void restart_signal()
+{
+  request_performed = true;
+}
+
 int main(int argc, char* argv[])
 {
   srsran_register_signal_handler(signal_handler);
@@ -830,9 +835,4 @@ int main(int argc, char* argv[])
   cout << "---  exiting  ---" << endl;
 
   return SRSRAN_SUCCESS;
-}
-
-static void restart_signal()
-{
-  request_performed = true;
 }
