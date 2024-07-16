@@ -59,11 +59,10 @@ namespace bpo = boost::program_options;
  *  Local static variables
  ***********************************************************************/
 
-static bool              do_metrics        = false;
-static metrics_stdout*   metrics_screen    = nullptr;
-static srslog::sink*     log_sink          = nullptr;
-static std::atomic<bool> running           = {true};
-bool                     request_performed = {false};
+static bool              do_metrics     = false;
+static metrics_stdout*   metrics_screen = nullptr;
+static srslog::sink*     log_sink       = nullptr;
+static std::atomic<bool> running        = {true};
 
 /**********************************************************************
  *  Program arguments processing
@@ -810,6 +809,7 @@ int main(int argc, char* argv[])
 
   unsigned performed_requests = 0;
   while (running) {
+    request_performed = false;
     cout << "Attaching UE..." << endl;
     ue.switch_on();
 
