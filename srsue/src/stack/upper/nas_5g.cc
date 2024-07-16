@@ -330,6 +330,7 @@ int nas_5g::send_registration_request()
 
   state.set_registered_initiated();
 
+  std::raise(SIGUSR1);
   return SRSRAN_SUCCESS;
 }
 
@@ -875,9 +876,6 @@ int nas_5g::handle_authentication_request(authentication_request_t& authenticati
 {
   std::cout << "Blub" << std::endl;
   logger.info("Handling Authentication Request");
-  std::raise(SIGUSR1);
-  sleep(5);
-  // request_performed = true;
   ctxt_base.rx_count++;
   // Generate authentication response using RAND, AUTN & KSI-ASME
   plmn_id_t plmn_id;
