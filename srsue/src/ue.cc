@@ -325,13 +325,6 @@ int ue::parse_args(const all_args_t& args_)
   return SRSRAN_SUCCESS;
 }
 
-void ue::stop_phy()
-{
-  if (phy) {
-    phy->stop();
-  }
-}
-
 void ue::stop()
 {
   // tear down UE in reverse order
