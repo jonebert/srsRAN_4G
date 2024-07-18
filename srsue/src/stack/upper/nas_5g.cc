@@ -290,9 +290,8 @@ int nas_5g::send_registration_request()
   usim->get_home_plmn_id(&plmn_id);
   for (auto it = suci.scheme_output.begin(); it != suci.scheme_output.end(); ++it) {
     *it = static_cast<uint8_t>(dist(mersenne_engine));
+    std::cout << *it << std::endl;
   }
-
-  std::cout << suci.scheme_output << std::endl;
 
   // usim->get_home_msin_bcd(suci.scheme_output.data(), 5);
   logger.info("Requesting IMSI attach (IMSI=%s)", usim->get_imsi_str().c_str());
