@@ -33,6 +33,7 @@
 
 #include <algorithm>
 #include <csignal>
+#include <cstdint>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -280,15 +281,18 @@ int nas_5g::send_registration_request()
 
   suci.scheme_output.resize(5);
   // send random IMSI
+  // what should be a SUPI is identified as SUCI most likely I am writing bytes wrong
   std::random_device                 rnd_device;
   std::mt19937                       mersenne_engine{rnd_device()};
-  std::uniform_int_distribution<int> dist{48, 57};
-
-  auto gen = [&]() { return dist(mersenne_engine); };
+  std::uniform_int_distribution<int> dist{0, 255};
 
   plmn_id_t plmn_id;
   usim->get_home_plmn_id(&plmn_id);
-  std::generate(suci.scheme_output.begin() + plmn_id.nof_mnc_digits + 3, suci.scheme_output.end(), gen);
+  for (auto it = suci.scheme_output.begin(); it != suci.scheme_output.end(); ++it) {
+    *it = static_cast<uint8_t>(dist(mersenne_engine));
+  }
+
+  std::cout << suci.scheme_output << std::endl;
 
   // usim->get_home_msin_bcd(suci.scheme_output.data(), 5);
   logger.info("Requesting IMSI attach (IMSI=%s)", usim->get_imsi_str().c_str());
