@@ -284,12 +284,12 @@ int nas_5g::send_registration_request()
   // what should be a SUPI is identified as SUCI most likely I am writing bytes wrong
   std::random_device                 rnd_device;
   std::mt19937                       mersenne_engine{rnd_device()};
-  std::uniform_int_distribution<int> dist{0, 255};
+  std::uniform_int_distribution<int> dist{0, 9};
 
   plmn_id_t plmn_id;
   usim->get_home_plmn_id(&plmn_id);
   for (auto it = suci.scheme_output.begin(); it != suci.scheme_output.end(); ++it) {
-    *it = static_cast<uint8_t>(dist(mersenne_engine));
+    *it = (static_cast<uint8_t>(dist(mersenne_engine)) | static_cast<uint8_t>(dist(mersenne_engine)) << 4);
     std::cout << *it << std::endl;
   }
 
