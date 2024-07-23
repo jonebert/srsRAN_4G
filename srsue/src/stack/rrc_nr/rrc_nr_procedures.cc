@@ -22,6 +22,8 @@
 #include "srsue/hdr/stack/rrc_nr/rrc_nr_procedures.h"
 #include "srsran/common/standard_streams.h"
 
+#include <csignal>
+
 #define Error(fmt, ...) rrc_handle.logger.error("Proc \"%s\" - " fmt, name(), ##__VA_ARGS__)
 #define Warning(fmt, ...) rrc_handle.logger.warning("Proc \"%s\" - " fmt, name(), ##__VA_ARGS__)
 #define Info(fmt, ...) rrc_handle.logger.info("Proc \"%s\" - " fmt, name(), ##__VA_ARGS__)
@@ -34,7 +36,8 @@ using namespace srsran;
 namespace srsue {
 
 rrc_nr::connection_reconf_no_ho_proc::connection_reconf_no_ho_proc(rrc_nr& parent_) : rrc_handle(parent_), initiator(nr)
-{}
+{
+}
 
 proc_outcome_t rrc_nr::connection_reconf_no_ho_proc::init(const reconf_initiator_t         initiator_,
                                                           const bool                       endc_release_and_add_r15,
@@ -181,7 +184,8 @@ void rrc_nr::connection_reconf_no_ho_proc::then(const srsran::proc_state_t& resu
 
 rrc_nr::setup_request_proc::setup_request_proc(rrc_nr& parent_) :
   rrc_handle(parent_), logger(srslog::fetch_basic_logger("RRC-NR"))
-{}
+{
+}
 
 proc_outcome_t rrc_nr::setup_request_proc::init(srsran::nr_establishment_cause_t cause_,
                                                 srsran::unique_byte_buffer_t     dedicated_info_nas_)
@@ -276,6 +280,8 @@ void rrc_nr::setup_request_proc::then(const srsran::proc_state_t& result)
   } else {
     Info("Finished connection request procedure successfully.");
   }
+  logger.info("Restarting Attack");
+  std::raise(SIGUSR1);
   // TODO: signal back to NAS
   // rrc_handle.nas->connection_request_completed(result.is_success());
 }
@@ -315,7 +321,8 @@ srsran::proc_outcome_t rrc_nr::setup_request_proc::react(const cell_selection_pr
 // Simple procedure mainly do defer the transmission of the SetupComplete until all PHY reconfiguration are done
 rrc_nr::connection_setup_proc::connection_setup_proc(srsue::rrc_nr& parent_) :
   rrc_handle(parent_), logger(srslog::fetch_basic_logger("RRC-NR"))
-{}
+{
+}
 
 srsran::proc_outcome_t rrc_nr::connection_setup_proc::init(const asn1::rrc_nr::radio_bearer_cfg_s& radio_bearer_cfg_,
                                                            const asn1::rrc_nr::cell_group_cfg_s&   cell_group_,
