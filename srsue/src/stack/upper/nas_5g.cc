@@ -854,6 +854,8 @@ int nas_5g::handle_registration_accept(registration_accept_t& registration_accep
 
 int nas_5g::handle_registration_reject(registration_reject_t& registration_reject)
 {
+  std::raise(SIGUSR1);
+  return;
   logger.info("Handling Registration Reject");
   has_sec_ctxt = false;
   ctxt_base.rx_count++;
