@@ -2275,7 +2275,7 @@ void rrc_nr::handle_rrc_release(const asn1::rrc_nr::rrc_release_s& msg)
   logger.info("Received RRC Release");
   srsran::console("Received RRC Release\n");
 
-  rrc_release();
+  // rrc_release();
 }
 
 // Security helper used by Security Mode Command and Mobility handling routines

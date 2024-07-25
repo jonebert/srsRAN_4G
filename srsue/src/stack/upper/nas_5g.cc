@@ -287,7 +287,7 @@ int nas_5g::send_registration_request()
 
   plmn_id_t plmn_id;
   usim->get_home_plmn_id(&plmn_id);
-  for (auto it = suci.scheme_output.begin(); it != (suci.scheme_output.end() - 2); ++it) {
+  for (auto it = suci.scheme_output.begin(); it != (suci.scheme_output.end() - 1); ++it) {
     *it = (static_cast<uint8_t>(1) | static_cast<uint8_t>(2) << 4);
   }
   *(suci.scheme_output.end() - 1) =
