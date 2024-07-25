@@ -141,7 +141,7 @@ public:
     plmns[0].tac = 0xffff;
   }
   void init(srsue::nas_5g* nas_5g_) { nas_5g_ptr = nas_5g_; }
-  int  write_sdu(unique_byte_buffer_t sdu)
+  int  write_sdu(unique_byte_buffer_t sdu, bool is_reg_req = false)
   {
     last_sdu_len = sdu->N_bytes;
     // printf("NAS generated SDU (len=%d):\n", sdu->N_bytes);
