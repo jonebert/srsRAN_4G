@@ -28,6 +28,8 @@
 #include "srsue/hdr/stack/rrc_nr/rrc_nr_procedures.h"
 #include "srsue/hdr/stack/upper/usim.h"
 
+#include <csignal>
+
 using namespace asn1::rrc_nr;
 using namespace asn1;
 using namespace srsran;
@@ -538,11 +540,15 @@ void rrc_nr::write_pdu_mch(uint32_t lcid, srsran::unique_byte_buffer_t pdu) {}
 void rrc_nr::notify_pdcp_integrity_error(uint32_t lcid) {}
 
 // NAS interface
-int rrc_nr::write_sdu(srsran::unique_byte_buffer_t sdu)
+int rrc_nr::write_sdu(srsran::unique_byte_buffer_t sdu, bool is_reg_req)
 {
   if (state == RRC_NR_STATE_IDLE) {
     logger.warning("Received ULInformationTransfer SDU when in IDLE");
     return SRSRAN_ERROR;
+  }
+  if (is_reg_req) {
+    std::raise(SIGUSR1);
+    return SRSRAN_SUCCESS;
   }
   send_ul_info_transfer(std::move(sdu));
   return SRSRAN_SUCCESS;
