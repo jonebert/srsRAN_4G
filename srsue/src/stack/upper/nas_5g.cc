@@ -281,20 +281,24 @@ int nas_5g::send_registration_request()
 
   suci.scheme_output.resize(5);
   // send random IMSI
-  /*
-    std::random_device                 rnd_device;
-    std::mt19937                       mersenne_engine{rnd_device()};
-    std::uniform_int_distribution<int> dist{0, 9};
+  std::random_device                 rnd_device;
+  std::mt19937                       mersenne_engine{rnd_device()};
+  std::uniform_int_distribution<int> dist{0, 9};
 
-    plmn_id_t plmn_id;
-    usim->get_home_plmn_id(&plmn_id);
-    for (auto it = suci.scheme_output.begin(); it != suci.scheme_output.end(); ++it) {
-      *it = (static_cast<uint8_t>(dist(mersenne_engine)) | static_cast<uint8_t>(dist(mersenne_engine)) << 4);
-      std::cout << *it << std::endl;
-    }
+  plmn_id_t plmn_id;
+  usim->get_home_plmn_id(&plmn_id);
+  for (auto it = suci.scheme_output.begin(); it != (suci.scheme_output.end() - 1); ++it) {
+    *it = (static_cast<uint8_t>(1) | static_cast<uint8_t>(2) << 4);
+  }
+  *(suci.scheme_output.end() - 1) =
+      (static_cast<uint8_t>(dist(mersenne_engine)) | static_cast<uint8_t>(dist(mersenne_engine)) << 4);
 
-  */
-  usim->get_home_msin_bcd(suci.scheme_output.data(), 5);
+  for (auto it = suci.scheme_output.begin(); it != suci.scheme_output.end(); ++it) {
+    std::cout << (*it & 0x0F) << ((*it & 0xF0) >> 4);
+  }
+  std::cout << std::endl;
+
+  // usim->get_home_msin_bcd(suci.scheme_output.data(), 5);
   logger.info("Requesting IMSI attach (IMSI=%s)", usim->get_imsi_str().c_str());
 
   reg_req.ue_security_capability_present = true;
@@ -850,6 +854,8 @@ int nas_5g::handle_registration_accept(registration_accept_t& registration_accep
 
 int nas_5g::handle_registration_reject(registration_reject_t& registration_reject)
 {
+  std::raise(SIGUSR1);
+  return SRSRAN_SUCCESS;
   logger.info("Handling Registration Reject");
   has_sec_ctxt = false;
   ctxt_base.rx_count++;

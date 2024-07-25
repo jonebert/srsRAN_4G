@@ -279,6 +279,7 @@ void rrc_nr::decode_dl_ccch(unique_byte_buffer_t pdu)
   dl_ccch_msg_type_c::c1_c_* c1 = &dl_ccch_msg.msg.c1();
   switch (dl_ccch_msg.msg.c1().type().value) {
     case dl_ccch_msg_type_c::c1_c_::types::rrc_reject: {
+      break;
       // 5.3.15
       const auto& reject = c1->rrc_reject();
       srsran::console("Received RRC Reject\n");
@@ -337,6 +338,7 @@ void rrc_nr::decode_dl_dcch(uint32_t lcid, unique_byte_buffer_t pdu)
       break;
     }
     case dl_dcch_msg_type_c::c1_c_::types::rrc_release: {
+      break;
       rrc_release_s rrc_release = c1->rrc_release();
       task_sched.defer_task([this, rrc_release]() { handle_rrc_release(rrc_release); });
       break;
@@ -2275,7 +2277,7 @@ void rrc_nr::handle_rrc_release(const asn1::rrc_nr::rrc_release_s& msg)
   logger.info("Received RRC Release");
   srsran::console("Received RRC Release\n");
 
-  rrc_release();
+  // rrc_release();
 }
 
 // Security helper used by Security Mode Command and Mobility handling routines

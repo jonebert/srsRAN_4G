@@ -39222,7 +39222,7 @@ codebook_cfg_s::codebook_type_c_::type1_s_::sub_type_c_::type_i_single_panel_s_:
 }
 codebook_cfg_s::codebook_type_c_::type1_s_::sub_type_c_::type_i_single_panel_s_::nr_of_ant_ports_c_::more_than_two_s_::
     n1_n2_c_&
-                                    codebook_cfg_s::codebook_type_c_::type1_s_::sub_type_c_::type_i_single_panel_s_::nr_of_ant_ports_c_::
+    codebook_cfg_s::codebook_type_c_::type1_s_::sub_type_c_::type_i_single_panel_s_::nr_of_ant_ports_c_::
         more_than_two_s_::n1_n2_c_::operator=(
             const codebook_cfg_s::codebook_type_c_::type1_s_::sub_type_c_::type_i_single_panel_s_::nr_of_ant_ports_c_::
                 more_than_two_s_::n1_n2_c_& other)
