@@ -279,6 +279,7 @@ void rrc_nr::decode_dl_ccch(unique_byte_buffer_t pdu)
   dl_ccch_msg_type_c::c1_c_* c1 = &dl_ccch_msg.msg.c1();
   switch (dl_ccch_msg.msg.c1().type().value) {
     case dl_ccch_msg_type_c::c1_c_::types::rrc_reject: {
+      break;
       // 5.3.15
       const auto& reject = c1->rrc_reject();
       srsran::console("Received RRC Reject\n");
