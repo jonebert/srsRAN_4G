@@ -17117,7 +17117,7 @@ dl_dcch_msg_type_c::c1_c_::c1_c_(const dl_dcch_msg_type_c::c1_c_& other)
       c.init(other.c.get<rrc_resume_s>());
       break;
     case types::rrc_release:
-      // c.init(other.c.get<rrc_release_s>());
+      c.init(other.c.get<rrc_release_s>());
       break;
     case types::rrc_reest:
       c.init(other.c.get<rrc_reest_s>());
