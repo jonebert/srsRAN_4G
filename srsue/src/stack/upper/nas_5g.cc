@@ -325,7 +325,7 @@ int nas_5g::send_registration_request()
 
   logger.info("Sending Registration Request");
   if (rrc_nr->is_connected() == true) {
-    rrc_nr->write_sdu(std::move(pdu));
+    rrc_nr->write_sdu(std::move(pdu), true);
   } else {
     logger.debug("Initiating RRC NR Connection");
     if (rrc_nr->connection_request(nr_establishment_cause_t::mo_Signalling, std::move(pdu)) != SRSRAN_SUCCESS) {

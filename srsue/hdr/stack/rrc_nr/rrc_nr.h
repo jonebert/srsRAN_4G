@@ -117,7 +117,7 @@ public:
   void notify_pdcp_integrity_error(uint32_t lcid) final;
 
   // NAS interface
-  int      write_sdu(srsran::unique_byte_buffer_t sdu, bool is_reg_req);
+  int      write_sdu(srsran::unique_byte_buffer_t sdu, bool is_reg_req = false);
   bool     is_connected();
   int      connection_request(srsran::nr_establishment_cause_t cause, srsran::unique_byte_buffer_t sdu);
   uint16_t get_mcc();
