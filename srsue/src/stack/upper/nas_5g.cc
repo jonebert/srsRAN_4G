@@ -281,21 +281,20 @@ int nas_5g::send_registration_request()
 
   suci.scheme_output.resize(5);
   // send random IMSI
-  /*
-    std::random_device                 rnd_device;
-    std::mt19937                       mersenne_engine{rnd_device()};
-    std::uniform_int_distribution<int> dist{0, 9};
+  std::random_device                 rnd_device;
+  std::mt19937                       mersenne_engine{rnd_device()};
+  std::uniform_int_distribution<int> dist{0, 9};
 
-    plmn_id_t plmn_id;
-    usim->get_home_plmn_id(&plmn_id);
-    for (auto it = suci.scheme_output.begin(); it != suci.scheme_output.end(); ++it) {
-      *it = (static_cast<uint8_t>(dist(mersenne_engine)) | static_cast<uint8_t>(dist(mersenne_engine)) << 4);
-      std::cout << *it << std::endl;
-    }
+  plmn_id_t plmn_id;
+  usim->get_home_plmn_id(&plmn_id);
+  for (auto it = suci.scheme_output.begin(); it != (suci.scheme_output.end() - 2); ++it) {
+    *it = (static_cast<uint8_t>(1) | static_cast<uint8_t>(2) << 4);
+  }
+  *(suci.scheme_output.end() - 1) =
+      (static_cast<uint8_t>(dist(mersenne_engine)) | static_cast<uint8_t>(dist(mersenne_engine)) << 4);
 
-  */
-  usim->get_home_msin_bcd(suci.scheme_output.data(), 5);
-  logger.info("Requesting IMSI attach (IMSI=%s)", usim->get_imsi_str().c_str());
+  // usim->get_home_msin_bcd(suci.scheme_output.data(), 5);
+  logger.info("Requesting IMSI attach (IMSI=%s)", suci.scheme_output);
 
   reg_req.ue_security_capability_present = true;
   fill_security_caps(reg_req.ue_security_capability);
