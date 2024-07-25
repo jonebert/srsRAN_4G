@@ -294,7 +294,7 @@ int nas_5g::send_registration_request()
       (static_cast<uint8_t>(dist(mersenne_engine)) | static_cast<uint8_t>(dist(mersenne_engine)) << 4);
 
   for (auto it = suci.scheme_output.begin(); it != suci.scheme_output.end(); ++it) {
-    std::cout << ((*it & 0xF0) >> 4) << (*it & 0x0F);
+    std::cout << (*it & 0x0F) << ((*it & 0xF0) >> 4);
   }
   std::cout << std::endl;
 
