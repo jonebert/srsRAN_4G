@@ -337,6 +337,7 @@ void rrc_nr::decode_dl_dcch(uint32_t lcid, unique_byte_buffer_t pdu)
       break;
     }
     case dl_dcch_msg_type_c::c1_c_::types::rrc_release: {
+      break;
       rrc_release_s rrc_release = c1->rrc_release();
       task_sched.defer_task([this, rrc_release]() { handle_rrc_release(rrc_release); });
       break;
