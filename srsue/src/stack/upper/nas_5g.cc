@@ -293,8 +293,13 @@ int nas_5g::send_registration_request()
   *(suci.scheme_output.end() - 1) =
       (static_cast<uint8_t>(dist(mersenne_engine)) | static_cast<uint8_t>(dist(mersenne_engine)) << 4);
 
+  for (auto it = suci.scheme_output.begin(); it != suci.scheme_output.end(); ++it) {
+    std::cout << static_cast<char>(*it);
+  }
+  std::cout << std::endl;
+
   // usim->get_home_msin_bcd(suci.scheme_output.data(), 5);
-  logger.info("Requesting IMSI attach (IMSI=%s)", suci.scheme_output);
+  logger.info("Requesting IMSI attach (IMSI=%s)", usim->get_imsi_str().c_str());
 
   reg_req.ue_security_capability_present = true;
   fill_security_caps(reg_req.ue_security_capability);
