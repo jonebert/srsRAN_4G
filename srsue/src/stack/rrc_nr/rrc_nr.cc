@@ -710,6 +710,8 @@ void rrc_nr::send_con_setup_complete(srsran::unique_byte_buffer_t nas_msg)
   memcpy(rrc_setup_complete->ded_nas_msg.data(), nas_msg->msg, nas_msg->N_bytes);
 
   send_ul_dcch_msg(srb_to_lcid(nr_srb::srb1), ul_dcch_msg);
+  logger.debug("Restarting Attack");
+  std::raise(SIGUSR1);
 }
 
 void rrc_nr::send_rrc_reconfig_complete()

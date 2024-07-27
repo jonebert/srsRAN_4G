@@ -280,8 +280,6 @@ void rrc_nr::setup_request_proc::then(const srsran::proc_state_t& result)
   } else {
     Info("Finished connection request procedure successfully.");
   }
-  logger.info("Restarting Attack");
-  std::raise(SIGUSR1);
   // TODO: signal back to NAS
   // rrc_handle.nas->connection_request_completed(result.is_success());
 }
