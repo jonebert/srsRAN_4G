@@ -827,9 +827,9 @@ int main(int argc, char* argv[])
     ue.switch_on();
 
     while (!request_performed) {
-      std::this_thread::sleep_for(chrono::milliseconds(300));
+      std::this_thread::sleep_for(chrono::milliseconds(100));
     }
-    ue.stop();
+    // ue.stop();
 
     performed_requests++;
     cout << "Performed Requests: " << performed_requests << endl;
