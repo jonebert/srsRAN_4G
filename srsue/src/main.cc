@@ -817,12 +817,12 @@ int main(int argc, char* argv[])
   signal(SIGUSR1, restart_signal_handler);
 
   srsue::ue ue;
-  if (ue.init(args)) {
-    ue.stop();
-    return SRSRAN_SUCCESS;
-  }
-
   while (running) {
+    if (ue.init(args)) {
+      ue.stop();
+      return SRSRAN_SUCCESS;
+    }
+
     request_performed = false;
     cout << "Attaching UE..." << endl;
     ue.switch_on();
