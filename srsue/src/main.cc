@@ -37,6 +37,7 @@
 #include "srsue/hdr/ue.h"
 #include <boost/program_options.hpp>
 #include <boost/program_options/parsers.hpp>
+#include <chrono>
 #include <csignal>
 #include <iostream>
 #include <pthread.h>
@@ -816,8 +817,11 @@ int main(int argc, char* argv[])
   unsigned performed_requests = 0;
   signal(SIGUSR1, restart_signal_handler);
 
-  srsue::ue ue;
+  srsue::ue                             ue;
+  std::chrono::steady_clock::time_point begin;
+  std::chrono::steady_clock::time_point end;
   while (running) {
+    begin = std::chrono::steady_clock::now();
     if (ue.init(args)) {
       ue.stop();
       return SRSRAN_SUCCESS;
@@ -831,7 +835,12 @@ int main(int argc, char* argv[])
       std::this_thread::sleep_for(chrono::milliseconds(100));
     }
     ue.stop();
+    end = std::chrono::steady_clock::now();
 
+    cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]"
+         << endl;
+    cout << "Time difference = " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]"
+         << endl;
     performed_requests++;
     cout << "Performed Requests: " << performed_requests << endl;
   }
