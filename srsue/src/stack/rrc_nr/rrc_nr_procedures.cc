@@ -358,7 +358,6 @@ srsran::proc_outcome_t rrc_nr::connection_setup_proc::react(const bool& config_c
     return proc_outcome_t::error;
   }
 
-  logger.info("Sending Setup Complete");
   rrc_handle.send_con_setup_complete(std::move(dedicated_info_nas));
   return proc_outcome_t::success;
 }

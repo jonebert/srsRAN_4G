@@ -29,6 +29,7 @@
 #include "srsue/hdr/stack/upper/usim.h"
 
 #include <csignal>
+#include <thread>
 
 using namespace asn1::rrc_nr;
 using namespace asn1;
@@ -566,6 +567,11 @@ int rrc_nr::connection_request(srsran::nr_establishment_cause_t cause, srsran::u
     return SRSRAN_ERROR;
   }
   callback_list.add_proc(setup_req_proc);
+  std::this_thread::sleep_for(chrono::seconds(1));
+  if (!is_connected) {
+    logger.info("Restarting because no answer");
+    std::raise(SIGUSR1);
+  }
   return SRSRAN_SUCCESS;
 }
 
