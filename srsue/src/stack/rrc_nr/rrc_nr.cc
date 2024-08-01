@@ -151,7 +151,8 @@ const char* rrc_nr::get_rb_name(uint32_t lcid)
 // Timeout callback interface
 void rrc_nr::timer_expired(uint32_t timeout_id)
 {
-  logger.debug("Handling Timer Expired");
+  logger.debug("Handling Timer Expired %d", timeout_id);
+  std::raise(SIGUSR1);
   if (timeout_id == sim_measurement_timer.id() && rrc_eutra != nullptr) {
     logger.debug("Triggered simulated measurement");
 
