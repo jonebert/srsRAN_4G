@@ -567,8 +567,8 @@ int rrc_nr::connection_request(srsran::nr_establishment_cause_t cause, srsran::u
     return SRSRAN_ERROR;
   }
   callback_list.add_proc(setup_req_proc);
-  std::this_thread::sleep_for(chrono::seconds(1));
-  if (!is_connected) {
+  std::this_thread::sleep_for(std::chrono::seconds(1));
+  if (!is_connected()) {
     logger.info("Restarting because no answer");
     std::raise(SIGUSR1);
   }
