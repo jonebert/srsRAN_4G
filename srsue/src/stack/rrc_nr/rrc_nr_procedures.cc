@@ -265,6 +265,10 @@ proc_outcome_t rrc_nr::setup_request_proc::step()
     if (rrc_handle.state == RRC_NR_STATE_CONNECTED) {
       // Received ConnectionSetup
       return proc_outcome_t::success;
+    } else {
+      logger.info("Restarting attack got no answer");
+      std::raise("SIGUSR1");
+      return proc_outcome_t::error;
     }
   }
 
