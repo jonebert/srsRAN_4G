@@ -868,11 +868,9 @@ proc_outcome_t rrc::connection_request_proc::step()
 
   } else if (state == state_t::wait_t300) {
     // Wait until t300 stops due to RRCConnectionSetup/Reject or expiry
-    Info("waiting for t300");
     if (rrc_ptr->t300.is_running()) {
       return proc_outcome_t::yield;
     }
-    Info("No more waiting for t300");
 
     if (rrc_ptr->state == RRC_STATE_CONNECTED) {
       // Received ConnectionSetup
