@@ -373,7 +373,8 @@ proc_outcome_t rrc::si_acquire_proc::react(si_acq_timer_expired ev)
 
 rrc::serving_cell_config_proc::serving_cell_config_proc(rrc* parent_) :
   rrc_ptr(parent_), logger(srslog::fetch_basic_logger("RRC"))
-{}
+{
+}
 
 /*
  * Retrieves all required SIB or configures them if already retrieved before
@@ -784,7 +785,8 @@ void rrc::plmn_search_proc::then(const srsran::proc_state_t& result) const
 
 rrc::connection_request_proc::connection_request_proc(rrc* parent_) :
   rrc_ptr(parent_), logger(srslog::fetch_basic_logger("RRC"))
-{}
+{
+}
 
 proc_outcome_t rrc::connection_request_proc::init(srsran::establishment_cause_t cause_,
                                                   srsran::unique_byte_buffer_t  dedicated_info_nas_)
@@ -866,9 +868,9 @@ proc_outcome_t rrc::connection_request_proc::step()
 
   } else if (state == state_t::wait_t300) {
     // Wait until t300 stops due to RRCConnectionSetup/Reject or expiry
-    if (rrc_ptr->t300.is_running()) {
-      return proc_outcome_t::yield;
-    }
+    //    if (rrc_ptr->t300.is_running()) {
+    //      return proc_outcome_t::yield;
+    //    }
 
     if (rrc_ptr->state == RRC_STATE_CONNECTED) {
       // Received ConnectionSetup
@@ -950,7 +952,8 @@ srsran::proc_outcome_t rrc::connection_request_proc::react(const cell_selection_
 // Simple procedure mainly do defer the transmission of the SetupComplete until all PHY reconfiguration are done
 rrc::connection_setup_proc::connection_setup_proc(srsue::rrc* parent_) :
   rrc_ptr(parent_), logger(srslog::fetch_basic_logger("RRC"))
-{}
+{
+}
 
 srsran::proc_outcome_t rrc::connection_setup_proc::init(const asn1::rrc::rr_cfg_ded_s* cnfg_,
                                                         srsran::unique_byte_buffer_t   dedicated_info_nas_)
@@ -1130,7 +1133,8 @@ void rrc::connection_reconf_no_ho_proc::then(const srsran::proc_state_t& result)
 
 rrc::process_pcch_proc::process_pcch_proc(srsue::rrc* parent_) :
   rrc_ptr(parent_), logger(srslog::fetch_basic_logger("RRC"))
-{}
+{
+}
 
 proc_outcome_t rrc::process_pcch_proc::init(const asn1::rrc::paging_s& paging_)
 {
@@ -1368,7 +1372,8 @@ void rrc::cell_reselection_proc::then(const srsran::proc_state_t& result)
  *************************************/
 
 rrc::connection_reest_proc::connection_reest_proc(srsue::rrc* rrc_) : rrc_ptr(rrc_), state(state_t::wait_cell_selection)
-{}
+{
+}
 
 proc_outcome_t rrc::connection_reest_proc::init(asn1::rrc::reest_cause_e cause)
 {
