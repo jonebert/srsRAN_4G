@@ -710,14 +710,14 @@ static size_t fixup_log_file_maxsize(int x)
 }
 
 extern "C" void srsran_dft_exit();
-static void     emergency_cleanup_handler(void* data)
-{
-  srslog::flush();
-  if (log_sink) {
-    log_sink->flush();
-  }
-  srsran_dft_exit();
-}
+// static void     emergency_cleanup_handler(void* data)
+//{
+//   srslog::flush();
+//   if (log_sink) {
+//     log_sink->flush();
+//   }
+//   srsran_dft_exit();
+// }
 
 static void signal_handler()
 {
