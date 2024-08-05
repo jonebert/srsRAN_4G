@@ -732,7 +732,7 @@ static void restart_signal_handler(int signal)
 int main(int argc, char* argv[])
 {
   srsran_register_signal_handler(signal_handler);
-  add_emergency_cleanup_handler(emergency_cleanup_handler, nullptr);
+  // add_emergency_cleanup_handler(emergency_cleanup_handler, nullptr);
   srsran_debug_handle_crash(argc, argv);
 
   all_args_t args = {};
