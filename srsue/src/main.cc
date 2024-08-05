@@ -710,14 +710,14 @@ static size_t fixup_log_file_maxsize(int x)
 }
 
 extern "C" void srsran_dft_exit();
-// static void     emergency_cleanup_handler(void* data)
-//{
-//   srslog::flush();
-//   if (log_sink) {
-//     log_sink->flush();
-//   }
-//   srsran_dft_exit();
-// }
+static void     emergency_cleanup_handler(void* data)
+{
+  srslog::flush();
+  if (log_sink) {
+    log_sink->flush();
+  }
+  srsran_dft_exit();
+}
 
 static void signal_handler()
 {
@@ -732,8 +732,8 @@ static void restart_signal_handler(int signal)
 int main(int argc, char* argv[])
 {
   srsran_register_signal_handler(signal_handler);
-  // add_emergency_cleanup_handler(emergency_cleanup_handler, nullptr);
-  // srsran_debug_handle_crash(argc, argv);
+  add_emergency_cleanup_handler(emergency_cleanup_handler, nullptr);
+  srsran_debug_handle_crash(argc, argv);
 
   all_args_t args = {};
   if (int err = parse_args(&args, argc, argv)) {
