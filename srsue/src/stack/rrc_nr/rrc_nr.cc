@@ -615,12 +615,13 @@ void rrc_nr::send_setup_request(srsran::nr_establishment_cause_t cause)
   rrc_setup_request_ies_s* rrc_setup_req = &ul_ccch_msg.msg.set_c1().set_rrc_setup_request().rrc_setup_request;
 
   // TODO: implement ng_minus5_g_s_tmsi_part1
-  rrc_setup_req->ue_id.set_random_value();
+  rrc_setup_req->ue_id.set_ng_minus5_g_s_tmsi_part1();
   uint64_t random_id = srsran_random_uniform_int_dist(random_gen, 0, 12345);
   for (uint i = 0; i < 5; i++) { // fill random ID bytewise, 40 bits = 5 bytes
     random_id |= ((uint64_t)rand() & 0xFF) << i * 8;
   }
-  rrc_setup_req->ue_id.random_value().from_number(random_id, rrc_setup_req->ue_id.random_value().length());
+  rrc_setup_req->ue_id.ng_minus5_g_s_tmsi_part1().from_number(random_id,
+                                                              rrc_setup_req->ue_id.ng_minus5_g_s_tmsi_part1().length());
   rrc_setup_req->establishment_cause = (establishment_cause_opts::options)cause;
 
   send_ul_ccch_msg(ul_ccch_msg);
