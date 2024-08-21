@@ -97,6 +97,11 @@ bool usim_base::get_imei_vec(uint8_t* imei_, uint32_t n)
   return true;
 }
 
+uint64_t usim_base::get_tmsi()
+{
+  return tmsi;
+}
+
 std::string usim_base::get_mcc_str(const uint8_t* imsi_vec)
 {
   std::ostringstream mcc_oss;

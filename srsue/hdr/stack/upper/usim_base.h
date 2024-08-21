@@ -57,6 +57,7 @@ public:
   bool        using_op;
   std::string op;
   std::string opc;
+  std::string tmsi;
   std::string imsi;
   std::string imei;
   std::string k;
@@ -78,12 +79,13 @@ public:
   std::string get_imsi_str() final;
   std::string get_imei_str() final;
 
-  bool get_imsi_vec(uint8_t* imsi_, uint32_t n) final;
-  bool get_home_mcc_bytes(uint8_t* mcc_, uint32_t n) final;
-  bool get_home_mnc_bytes(uint8_t* mnc_, uint32_t n) final;
-  bool get_home_msin_bcd(uint8_t* msin_, uint32_t n) final;
-  bool get_imei_vec(uint8_t* imei_, uint32_t n) final;
-  bool get_home_plmn_id(srsran::plmn_id_t* home_plmn_id) final;
+  bool    get_imsi_vec(uint8_t* imsi_, uint32_t n) final;
+  uin64_t get_tmsi();
+  bool    get_home_mcc_bytes(uint8_t* mcc_, uint32_t n) final;
+  bool    get_home_mnc_bytes(uint8_t* mnc_, uint32_t n) final;
+  bool    get_home_msin_bcd(uint8_t* msin_, uint32_t n) final;
+  bool    get_imei_vec(uint8_t* imei_, uint32_t n) final;
+  bool    get_home_plmn_id(srsran::plmn_id_t* home_plmn_id) final;
 
   virtual auth_result_t generate_authentication_response(uint8_t* rand,
                                                          uint8_t* autn_enb,
@@ -137,6 +139,7 @@ protected:
   // User data
   // 3GPP 33.102 v10.0.0 Annex H
   uint64_t    imsi = 0;
+  uint64_t    tmsi = 0;
   uint64_t    imei = 0;
   std::string imsi_str;
   std::string imei_str;
