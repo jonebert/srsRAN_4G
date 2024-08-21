@@ -31,6 +31,7 @@
 #include "srsran/interfaces/ue_usim_interfaces.h"
 #include "srsue/hdr/stack/upper/nas_5g_procedures.h"
 
+#include <csignal>
 #include <fstream>
 #include <iomanip>
 #include <unistd.h>
