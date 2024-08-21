@@ -33,9 +33,11 @@ usim::usim(srslog::basic_logger& logger) : usim_base(logger) {}
 int usim::init(usim_args_t* args)
 {
   imsi_str = args->imsi;
+  tmsi_str = args->tmsi;
   imei_str = args->imei;
 
   const char* imsi_c = args->imsi.c_str();
+  const char* tmsi_c = args->tmsi.c_str();
   const char* imei_c = args->imei.c_str();
 
   auth_algo = auth_algo_milenage;
@@ -78,6 +80,17 @@ int usim::init(usim_args_t* args)
   } else {
     logger.error("Invalid length for IMSI: %zu should be %d", args->imsi.length(), 15);
     srsran::console("Invalid length for IMSI: %zu should be %d\n", args->imsi.length(), 15);
+  }
+
+  if (10 == args->tmsi.length()) {
+    tmsi = 0;
+    for (int i = 0; i < 10; i++) {
+      tmsi *= 10;
+      tmsi += tmsi_c[i] - '0';
+    }
+  } else {
+    logger.error("Invalid length for TMSI: %zu should be %d", args->TMSI.length(), 10);
+    srsran::console("Invalid length for TMSI: %zu should be %d\n", args->TMSI.length(), 10);
   }
 
   if (15 == args->imei.length()) {

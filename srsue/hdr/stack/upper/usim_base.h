@@ -142,6 +142,7 @@ protected:
   uint64_t    tmsi = 0;
   uint64_t    imei = 0;
   std::string imsi_str;
+  std::string tmsi_str;
   std::string imei_str;
 
   // Security variables
