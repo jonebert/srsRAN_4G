@@ -723,7 +723,7 @@ static void signal_handler()
   running = false;
 }
 
-static void stop_signal_handler()
+static void stop_signal_handler(int signal)
 {
   request_performed = true;
 }
