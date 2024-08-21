@@ -89,8 +89,8 @@ int usim::init(usim_args_t* args)
       tmsi += tmsi_c[i] - '0';
     }
   } else {
-    logger.error("Invalid length for TMSI: %zu should be %d", args->TMSI.length(), 10);
-    srsran::console("Invalid length for TMSI: %zu should be %d\n", args->TMSI.length(), 10);
+    logger.error("Invalid length for TMSI: %zu should be %d", args->tmsi.length(), 10);
+    srsran::console("Invalid length for TMSI: %zu should be %d\n", args->tmsi.length(), 10);
   }
 
   if (15 == args->imei.length()) {
