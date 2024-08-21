@@ -80,7 +80,7 @@ public:
   std::string get_imei_str() final;
 
   bool     get_imsi_vec(uint8_t* imsi_, uint32_t n) final;
-  uint64_t get_tmsi();
+  uint64_t get_tmsi() final;
   bool     get_home_mcc_bytes(uint8_t* mcc_, uint32_t n) final;
   bool     get_home_mnc_bytes(uint8_t* mnc_, uint32_t n) final;
   bool     get_home_msin_bcd(uint8_t* msin_, uint32_t n) final;
