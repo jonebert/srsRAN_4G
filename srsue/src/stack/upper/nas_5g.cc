@@ -436,7 +436,7 @@ int nas_5g::send_security_mode_complete(const srsran::nas_5g::security_mode_comm
 
   if (cfg.enable_slicing) {
     s_nssai_t s_nssai{};
-    modified_registration_request.requested_nssai_present      = true;
+    modified_registration_request.requested_nssai_present = true;
     set_nssai(s_nssai);
     modified_registration_request.requested_nssai.s_nssai_list = {s_nssai};
   }
@@ -829,6 +829,8 @@ int nas_5g::handle_registration_accept(registration_accept_t& registration_accep
 int nas_5g::handle_registration_reject(registration_reject_t& registration_reject)
 {
   logger.info("Handling Registration Reject");
+  std::raise(SIGUSR1);
+  return SRSRAN_SUCCESS;
   has_sec_ctxt = false;
   ctxt_base.rx_count++;
   state.set_deregistered(mm5g_state_t::deregistered_substate_t::plmn_search);
@@ -858,6 +860,8 @@ int nas_5g::handle_registration_reject(registration_reject_t& registration_rejec
 
 int nas_5g::handle_authentication_request(authentication_request_t& authentication_request)
 {
+  std::raise(SIGUSR1);
+  return SRSRAN_SUCCESS;
   logger.info("Handling Authentication Request");
   ctxt_base.rx_count++;
   // Generate authentication response using RAND, AUTN & KSI-ASME

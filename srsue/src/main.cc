@@ -56,10 +56,11 @@ namespace bpo = boost::program_options;
  *  Local static variables
  ***********************************************************************/
 
-static bool              do_metrics     = false;
-static metrics_stdout*   metrics_screen = nullptr;
-static srslog::sink*     log_sink       = nullptr;
-static std::atomic<bool> running        = {true};
+static bool              do_metrics        = false;
+static metrics_stdout*   metrics_screen    = nullptr;
+static srslog::sink*     log_sink          = nullptr;
+static std::atomic<bool> running           = {true};
+static std::atomic<bool> request_performed = {false};
 
 /**********************************************************************
  *  Program arguments processing
@@ -722,11 +723,17 @@ static void signal_handler()
   running = false;
 }
 
+static void stop_signal_handler()
+{
+  request_performed = true;
+}
+
 int main(int argc, char* argv[])
 {
   srsran_register_signal_handler(signal_handler);
   add_emergency_cleanup_handler(emergency_cleanup_handler, nullptr);
   srsran_debug_handle_crash(argc, argv);
+  signal(SIGUSR1, stop_signal_handler);
 
   all_args_t args = {};
   if (int err = parse_args(&args, argc, argv)) {
@@ -812,7 +819,7 @@ int main(int argc, char* argv[])
     ue.start_plot();
   }
 
-  while (running) {
+  while (running && !request_performed) {
     sleep(1);
   }
 
