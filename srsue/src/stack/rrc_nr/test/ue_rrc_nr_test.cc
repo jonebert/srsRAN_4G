@@ -34,7 +34,7 @@ class dummy_phy : public phy_interface_rrc_nr
 {
   bool           set_config(const srsran::phy_cfg_nr_t& cfg) override { return true; }
   phy_nr_state_t get_state() override { return PHY_NR_STATE_IDLE; };
-  void           reset_nr() override{};
+  void           reset_nr() override {};
   bool           start_cell_search(const cell_search_args_t& req) override { return false; };
   bool           start_cell_select(const cell_select_args_t& req) override { return false; };
 };
@@ -54,7 +54,7 @@ class dummy_mac : public mac_interface_rrc_nr
 
   void start_ra_procedure() {}
 
-  void set_contention_id(const uint64_t ue_identity){};
+  void set_contention_id(const uint64_t ue_identity) {};
 
   bool set_crnti(const uint16_t crnti) { return true; };
 };
@@ -86,42 +86,42 @@ public:
 
 class dummy_pdcp : public pdcp_interface_rrc
 {
-  void set_enabled(uint32_t lcid, bool enabled){};
-  void reestablish(){};
-  void reestablish(uint32_t lcid){};
-  void reset(){};
-  void write_sdu(uint32_t lcid, srsran::unique_byte_buffer_t sdu, int sn = -1){};
+  void set_enabled(uint32_t lcid, bool enabled) {};
+  void reestablish() {};
+  void reestablish(uint32_t lcid) {};
+  void reset() {};
+  void write_sdu(uint32_t lcid, srsran::unique_byte_buffer_t sdu, int sn = -1) {};
   int  add_bearer(uint32_t lcid, const srsran::pdcp_config_t& cnfg) { return SRSRAN_SUCCESS; };
-  void del_bearer(uint32_t lcid){};
-  void change_lcid(uint32_t old_lcid, uint32_t new_lcid){};
-  void config_security(uint32_t lcid, const srsran::as_security_config_t& sec_cfg){};
-  void config_security_all(const srsran::as_security_config_t& sec_cfg){};
-  void enable_integrity(uint32_t lcid, srsran::srsran_direction_t direction){};
+  void del_bearer(uint32_t lcid) {};
+  void change_lcid(uint32_t old_lcid, uint32_t new_lcid) {};
+  void config_security(uint32_t lcid, const srsran::as_security_config_t& sec_cfg) {};
+  void config_security_all(const srsran::as_security_config_t& sec_cfg) {};
+  void enable_integrity(uint32_t lcid, srsran::srsran_direction_t direction) {};
   void enable_encryption(uint32_t                   lcid,
-                         srsran::srsran_direction_t direction = srsran::srsran_direction_t::DIRECTION_TXRX){};
-  void send_status_report(){};
-  void send_status_report(uint32_t lcid){};
+                         srsran::srsran_direction_t direction = srsran::srsran_direction_t::DIRECTION_TXRX) {};
+  void send_status_report() {};
+  void send_status_report(uint32_t lcid) {};
 };
 
 class dummy_sdap : public sdap_interface_pdcp_nr, public sdap_interface_gw_nr, public sdap_interface_rrc
 {
-  void write_pdu(uint32_t lcid, srsran::unique_byte_buffer_t pdu) final{};
-  void write_sdu(uint32_t lcid, srsran::unique_byte_buffer_t pdu) final{};
+  void write_pdu(uint32_t lcid, srsran::unique_byte_buffer_t pdu) final {};
+  void write_sdu(uint32_t lcid, srsran::unique_byte_buffer_t pdu) final {};
   bool set_bearer_cfg(uint32_t lcid, const sdap_interface_rrc::bearer_cfg_t& cfg) final { return true; };
 };
 
 class dummy_gw : public gw_interface_rrc
 {
-  void add_mch_port(uint32_t lcid, uint32_t port){};
+  void add_mch_port(uint32_t lcid, uint32_t port) {};
   bool is_running() { return true; };
 };
 
 class dummy_eutra : public rrc_eutra_interface_rrc_nr
 {
-  void new_cell_meas_nr(const std::vector<phy_meas_nr_t>& meas){};
-  void nr_rrc_con_reconfig_complete(bool status){};
-  void nr_notify_reconfiguration_failure(){};
-  void nr_scg_failure_information(const srsran::scg_failure_cause_t cause){};
+  void new_cell_meas_nr(const std::vector<phy_meas_nr_t>& meas) {};
+  void nr_rrc_con_reconfig_complete(bool status) {};
+  void nr_notify_reconfiguration_failure() {};
+  void nr_scg_failure_information(const srsran::scg_failure_cause_t cause) {};
 };
 
 class dummy_nas : public nas_5g_interface_rrc_nr
@@ -133,17 +133,18 @@ class dummy_nas : public nas_5g_interface_rrc_nr
 
 class dummy_sim : public usim_interface_rrc_nr
 {
-  void generate_nr_as_keys(srsran::as_key_t& k_amf, uint32_t count_ul, srsran::as_security_config_t* sec_cfg){};
-  bool generate_nr_context(uint16_t sk_counter, srsran::as_security_config_t* sec_cfg) { return true; }
-  bool update_nr_context(srsran::as_security_config_t* sec_cfg) { return true; }
+  void     generate_nr_as_keys(srsran::as_key_t& k_amf, uint32_t count_ul, srsran::as_security_config_t* sec_cfg) {};
+  bool     generate_nr_context(uint16_t sk_counter, srsran::as_security_config_t* sec_cfg) { return true; }
+  bool     update_nr_context(srsran::as_security_config_t* sec_cfg) { return true; }
+  uint64_t get_tmsi() { return 0; }
 };
 
 class dummy_stack : public stack_interface_rrc
 {
   srsran::tti_point get_current_tti() final { return srsran::tti_point(); };
-  void              add_eps_bearer(uint8_t eps_bearer_id, srsran::srsran_rat_t rat, uint32_t lcid) final{};
-  void              remove_eps_bearer(uint8_t eps_bearer_id) final{};
-  void              reset_eps_bearers() final{};
+  void              add_eps_bearer(uint8_t eps_bearer_id, srsran::srsran_rat_t rat, uint32_t lcid) final {};
+  void              remove_eps_bearer(uint8_t eps_bearer_id) final {};
+  void              reset_eps_bearers() final {};
 };
 
 int rrc_nr_cap_request_test()
