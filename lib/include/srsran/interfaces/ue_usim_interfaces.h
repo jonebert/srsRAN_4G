@@ -91,7 +91,6 @@ public:
   virtual bool     generate_nr_context(uint16_t sk_counter, srsran::as_security_config_t* sec_cfg)       = 0;
   virtual bool     update_nr_context(srsran::as_security_config_t* sec_cfg)                              = 0;
   virtual uint64_t get_tmsi()                                                                            = 0;
-  virtual uint64_t get_amf_id()                                                                          = 0;
 };
 
 } // namespace srsue

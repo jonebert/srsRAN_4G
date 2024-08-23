@@ -33,15 +33,13 @@ usim::usim(srslog::basic_logger& logger) : usim_base(logger) {}
 
 int usim::init(usim_args_t* args)
 {
-  imsi_str   = args->imsi;
-  tmsi_str   = args->tmsi;
-  amf_id_str = args->amf_id;
-  imei_str   = args->imei;
+  imsi_str = args->imsi;
+  tmsi_str = args->tmsi;
+  imei_str = args->imei;
 
-  const char* imsi_c   = args->imsi.c_str();
-  const char* tmsi_c   = args->tmsi.c_str();
-  const char* amf_id_c = args->amf_id.c_str();
-  const char* imei_c   = args->imei.c_str();
+  const char* imsi_c = args->imsi.c_str();
+  const char* tmsi_c = args->tmsi.c_str();
+  const char* imei_c = args->imei.c_str();
 
   auth_algo = auth_algo_milenage;
   if ("xor" == args->algo) {
@@ -94,14 +92,6 @@ int usim::init(usim_args_t* args)
   } else {
     logger.error("Invalid length for TMSI: %zu should be %d", args->tmsi.length(), 10);
     srsran::console("Invalid length for TMSI: %zu should be %d\n", args->tmsi.length(), 10);
-  }
-
-  if (!args->amf_id.empty()) {
-    amf_id = 0;
-    for (std::size_t i = 0; i < args->amf_id.length(); i++) {
-      amf_id *= 10;
-      amf_id += amf_id_c[i] - '0';
-    }
   }
 
   if (15 == args->imei.length()) {
