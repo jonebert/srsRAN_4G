@@ -28,6 +28,7 @@
 #include "srsue/hdr/stack/rrc_nr/rrc_nr_procedures.h"
 #include "srsue/hdr/stack/upper/usim.h"
 #include <csignal>
+#include <iostream>
 
 using namespace asn1::rrc_nr;
 using namespace asn1;
@@ -699,6 +700,7 @@ void rrc_nr::send_con_setup_complete(srsran::unique_byte_buffer_t nas_msg)
   rrc_setup_complete->sel_plmn_id            = 1;
   rrc_setup_complete->registered_amf_present = true;
   rrc_setup_complete->registered_amf.amf_id.from_number(usim->get_amf_id());
+  std::cout << "AMF_ID: " << rrc_setup_complete->registered_amf.amf_id.to_number();
   rrc_setup_complete->guami_type_present               = false;
   rrc_setup_complete->ng_minus5_g_s_tmsi_value_present = false;
 
