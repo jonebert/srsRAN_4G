@@ -137,6 +137,7 @@ class dummy_sim : public usim_interface_rrc_nr
   bool     generate_nr_context(uint16_t sk_counter, srsran::as_security_config_t* sec_cfg) { return true; }
   bool     update_nr_context(srsran::as_security_config_t* sec_cfg) { return true; }
   uint64_t get_tmsi() { return 0; }
+  uint64_t get_amf_id() { return 0; }
 };
 
 class dummy_stack : public stack_interface_rrc

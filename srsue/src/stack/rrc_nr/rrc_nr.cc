@@ -696,8 +696,9 @@ void rrc_nr::send_con_setup_complete(srsran::unique_byte_buffer_t nas_msg)
 
   ul_dcch_msg.msg.c1().rrc_setup_complete().rrc_transaction_id = transaction_id;
 
-  rrc_setup_complete->sel_plmn_id                      = 1;
-  rrc_setup_complete->registered_amf_present           = false;
+  rrc_setup_complete->sel_plmn_id            = 1;
+  rrc_setup_complete->registered_amf_present = true;
+  rrc_setup_complete->registered_amf.amf_id.from_number(usim->get_amf_id());
   rrc_setup_complete->guami_type_present               = false;
   rrc_setup_complete->ng_minus5_g_s_tmsi_value_present = false;
 

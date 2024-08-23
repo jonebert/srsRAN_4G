@@ -102,6 +102,11 @@ uint64_t usim_base::get_tmsi()
   return tmsi;
 }
 
+uint64_t usim_base::get_amf_id()
+{
+  return amf_id;
+}
+
 std::string usim_base::get_mcc_str(const uint8_t* imsi_vec)
 {
   std::ostringstream mcc_oss;
