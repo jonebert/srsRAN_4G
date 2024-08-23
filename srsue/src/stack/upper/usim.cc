@@ -82,9 +82,9 @@ int usim::init(usim_args_t* args)
     srsran::console("Invalid length for IMSI: %zu should be %d\n", args->imsi.length(), 15);
   }
 
-  if (10 == args->tmsi.length()) {
+  if (0 < args->tmsi.length()) {
     tmsi = 0;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < args->tmsi.length(); i++) {
       tmsi *= 10;
       tmsi += tmsi_c[i] - '0';
     }
