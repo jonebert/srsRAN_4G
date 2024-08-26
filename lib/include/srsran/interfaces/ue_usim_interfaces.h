@@ -38,6 +38,7 @@ public:
   virtual bool        get_imsi_vec(uint8_t* imsi_, uint32_t n)          = 0;
   virtual bool        get_imei_vec(uint8_t* imei_, uint32_t n)          = 0;
   virtual bool        get_home_plmn_id(srsran::plmn_id_t* home_plmn_id) = 0;
+  virtual uint64_t    get_tmsi()                                        = 0;
   // Get the home mcc as bytes array
   virtual bool get_home_mcc_bytes(uint8_t* mcc_, uint32_t n) = 0;
   // Get the home mnc as byte array
