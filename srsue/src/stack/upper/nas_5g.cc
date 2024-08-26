@@ -270,9 +270,10 @@ int nas_5g::send_registration_request()
   mobile_identity_5gs_t::guti_5g_s& guti = reg_req.mobile_identity_5gs.set_guti_5g();
   usim->get_home_mcc_bytes(guti.mcc.data(), guti.mcc.size());
   usim->get_home_mnc_bytes(guti.mnc.data(), guti.mnc.size());
-  guti.amf_region_id = 2 guti.amf_set_id = 1;
-  guti.amf_pointer                       = 0;
-  guti.tmsi_5g                           = usim->get_tmsi();
+  guti.amf_region_id = 2;
+  guti.amf_set_id    = 1;
+  guti.amf_pointer   = 0;
+  guti.tmsi_5g       = usim->get_tmsi();
 
   logger.info("Requesting GUTI attach (S-TMSI=%d)", usim->get_tmsi());
 
