@@ -267,12 +267,14 @@ int nas_5g::send_registration_request()
       registration_type_5gs_t::follow_on_request_bit_type_::options::follow_on_request_pending;
   reg_req.registration_type_5gs.registration_type =
       registration_type_5gs_t::registration_type_type_::options::initial_registration;
-  mobile_identity_5gs_t::s_tmsi_5g_s& s_tmsi = reg_req.mobile_identity_5gs.set_s_tmsi_5g();
-  s_tmsi.amf_set_id                          = 1;
-  s_tmsi.amf_pointer                         = 0;
-  s_tmsi.tmsi_5g                             = usim->get_tmsi();
+  mobile_identity_5gs_t::guti_5g_s& guti = reg_req.mobile_identity_5gs.set_guti_5g();
+  usim->get_home_mcc_bytes(guti.mcc.data(), guti.mcc.size());
+  usim->get_home_mnc_bytes(guti.mnc.data(), guti.mnc.size());
+  guti.amf_region_id = 2 guti.amf_set_id = 1;
+  guti.amf_pointer                       = 0;
+  guti.tmsi_5g                           = usim->get_tmsi();
 
-  logger.info("Requesting S-TMSI attach (S-TMSI=%d)", usim->get_tmsi());
+  logger.info("Requesting GUTI attach (S-TMSI=%d)", usim->get_tmsi());
 
   reg_req.ue_security_capability_present = true;
   fill_security_caps(reg_req.ue_security_capability);
