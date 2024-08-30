@@ -854,6 +854,7 @@ int nas_5g::handle_registration_accept(registration_accept_t& registration_accep
 
 int nas_5g::handle_registration_reject(registration_reject_t& registration_reject)
 {
+  logger.info("Attack restart - Registration Reject");
   std::raise(SIGUSR1);
   return SRSRAN_SUCCESS;
   logger.info("Handling Registration Reject");
@@ -888,7 +889,7 @@ int nas_5g::handle_authentication_request(authentication_request_t& authenticati
 {
   state.set_null();
   std::raise(SIGUSR1);
-  logger.info("Finished Attack -- and another one");
+  logger.info("Attack restart - Authentication Request");
   return SRSRAN_SUCCESS;
   /*
     logger.info("Handling Authentication Request");

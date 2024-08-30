@@ -152,6 +152,7 @@ const char* rrc_nr::get_rb_name(uint32_t lcid)
 void rrc_nr::timer_expired(uint32_t timeout_id)
 {
   logger.debug("Handling Timer Expired %d", timeout_id);
+  logger.info("Attack restart - Timer Expired");
   std::raise(SIGUSR1);
   if (timeout_id == sim_measurement_timer.id() && rrc_eutra != nullptr) {
     logger.debug("Triggered simulated measurement");
@@ -712,7 +713,7 @@ void rrc_nr::send_con_setup_complete(srsran::unique_byte_buffer_t nas_msg)
   memcpy(rrc_setup_complete->ded_nas_msg.data(), nas_msg->msg, nas_msg->N_bytes);
 
   send_ul_dcch_msg(srb_to_lcid(nr_srb::srb1), ul_dcch_msg);
-  logger.info("Restarting Attack");
+  logger.info("Restarting Attack - sent RRCSetupComplete");
   std::raise(SIGUSR1);
 }
 
